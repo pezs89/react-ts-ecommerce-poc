@@ -5,14 +5,10 @@ import { RouterState, routerMiddleware } from 'connected-react-router';
 import { History } from 'history';
 import { FormStateMap } from 'redux-form';
 
-import { AuthState } from './features/auth/types';
-import { StreamsState } from './features/streams/types';
-import { rootSaga, createRootReducer } from './root-reducer';
 import { NotificationState } from './features/notification/types';
+import { createRootReducer } from './root-reducer';
 
 export interface ApplicationState {
-  auth: AuthState;
-  streams: StreamsState;
   notifications: NotificationState;
   form?: FormStateMap;
   router?: RouterState;
@@ -29,6 +25,5 @@ export const configureStore = (
     applyMiddleware(routerMiddleware(history), sagaMiddleware)
   );
   const store = createStore(createRootReducer(history), initialState, enhancer);
-  sagaMiddleware.run(rootSaga);
   return store;
 };
