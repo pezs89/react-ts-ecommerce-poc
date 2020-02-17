@@ -1,9 +1,12 @@
 import React from 'react';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { IMenuItem } from '../store/features/directory/types';
 
-const MenuItem: React.FC<IMenuItem> = ({ id, title, imageUrl, linkUrl, size }: IMenuItem): JSX.Element => {
+type MenuItemProps = IMenuItem & RouteComponentProps;
+
+const MenuItem: React.FC<MenuItemProps> = ({ title, imageUrl, size, linkUrl, history, match }: MenuItemProps): JSX.Element => {
   return (
-    <div className={`menu-item ${size ? `menu-item--${size}` : ''}`}>
+    <div className={`menu-item ${size ? `menu-item--${size}` : ''}`} onClick={() => history.push(`${match.url}/${linkUrl}`)}>
       <div
         className="background-image"
         style={{ backgroundImage: `url(${imageUrl})` }}>
@@ -20,4 +23,4 @@ const MenuItem: React.FC<IMenuItem> = ({ id, title, imageUrl, linkUrl, size }: I
   )
 }
 
-export default MenuItem;
+export default withRouter(MenuItem);
