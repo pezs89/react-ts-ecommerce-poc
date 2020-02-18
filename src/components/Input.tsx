@@ -3,10 +3,11 @@ import { WrappedFieldProps, WrappedFieldMetaProps } from 'redux-form';
 
 interface InputProps extends WrappedFieldProps {
   label: string
+  value: string | number
 }
 
 const Input: React.FC<InputProps> = (props: InputProps): JSX.Element => {
-  const { input, label, meta } = props;
+  const { input, label, meta, value } = props;
 
   const renderErrorMessage = ({ error, touched }: WrappedFieldMetaProps): JSX.Element | null => {
     if (error && touched) {
@@ -19,7 +20,7 @@ const Input: React.FC<InputProps> = (props: InputProps): JSX.Element => {
   return (
     <div className="field">
       <label className="field__label">{label}</label>
-      <input className={"field__input" + (hasError ? " field__input--error" : "")} {...input} />
+      <input className={"field__input" + (hasError ? " field__input--error" : "")} {...input} value={value}/>
       {renderErrorMessage(meta)}
     </div>
   );

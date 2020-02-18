@@ -1,4 +1,5 @@
 @import './abstracts/variables';
+@import './abstracts/mixins';
 
 @import './base/base';
 @import './base/typography';
@@ -18,5 +19,6 @@
 @import './components/menu-item';
 @import './components/collection-preview';
 @import './components/collection-item';
+@import './components/sign-in-up';
 
 @import './layout/stream-create';

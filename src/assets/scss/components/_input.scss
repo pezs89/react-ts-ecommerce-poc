@@ -1,39 +1,45 @@
-.field {
-  display: flex;
-  flex-direction: column;
-  margin: 10px 0;
-  width: 100%;
-  &__label,
-  &__input {
-    width: 100%;
-    font-family: Roboto, sans-serif;
-  }
-  &__label {
-    font-weight: 400;
-    font-size: 16px;
-    margin-bottom: 5px;
-  }
-  &__input {
-    height: 26px;
-    border: 0;
-    border-bottom: 2px solid rgba(0, 0, 0, 0.1);
-    margin: 0;
-    padding: 0;
-    outline: none;
-    transition: all 0.2s ease-in-out;
+.group {
+  position: relative;
+  margin: 45px 0;
+
+  .form-input {
+    background: none;
+    background-color: white;
+    color: $sub-color;
     font-size: 18px;
+    padding: 10px 10px 10px 5px;
+    display: block;
+    width: 100%;
+    border: none;
+    border-radius: 0;
+    border-bottom: 1px solid $sub-color;
+    margin: 25px 0;
+
     &:focus {
-      border-bottom: 2px solid $primary-color;
+      outline: none;
     }
-    &--error {
-      border-bottom: 1px solid $error-color;
-      &:focus {
-        border-bottom: 2px solid $error-color;
-      }
+
+    &:focus ~ .form-input-label {
+      @include shrinkLabel();
     }
   }
-  &__error {
-    padding: 5px 0;
-    color: $error-color;
+
+  input[type='password'] {
+    letter-spacing: 0.3em;
+  }
+
+  .form-input-label {
+    color: $sub-color;
+    font-size: 16px;
+    font-weight: normal;
+    position: absolute;
+    pointer-events: none;
+    left: 5px;
+    top: 10px;
+    transition: 300ms ease all;
+
+    &.shrink {
+      @include shrinkLabel();
+    }
   }
 }
