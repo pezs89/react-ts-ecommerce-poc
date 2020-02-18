@@ -30,7 +30,7 @@ class SignIn extends Component<{}, SignInState> {
           <SimpleInput name={'username'} value={username} type={'email'} label={'Email'} onChange={this.handleOnChange} required />
           <SimpleInput name={'password'} value={password} type={'password'} label={'Password'} onChange={this.handleOnChange} required />
           <Button type={'submit'} label={'Submit'} />
-          <Button type={'button'} label={'Sign in with Google'} onClick={signInWithGoogle}/>
+          <Button type={'button'} label={'Sign in with Google'} callback={signInWithGoogle}/>
         </form>
       </div>
     )
