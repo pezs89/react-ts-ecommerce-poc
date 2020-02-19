@@ -22,7 +22,7 @@ const Header: React.FC<HeaderProps> = ({ currentUser }) => {
         </Link>
         {
           currentUser ?
-            <div className='option'>SIGN OUT</div>
+            <div className='option' onClick={() => auth.signOut()}>SIGN OUT</div>
             :
             <Link className='option' to='/signin'>SIGN IN</Link>
         }
