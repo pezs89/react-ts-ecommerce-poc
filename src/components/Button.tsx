@@ -8,14 +8,14 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 
 const Button: React.FC<ButtonProps> = ({ type, value, label, callback, extraClass, children }: ButtonProps): JSX.Element => {
   return (
-    <div className='button-container'>
+    <>
       <button className={'custom-button ' + extraClass}
         type={type}
         value={value}
         onClick={(e: React.FormEvent<HTMLButtonElement>) => !!callback && callback((e.target as HTMLButtonElement).value)}>
         {label} {children}
       </button>
-    </div>
+    </>
   )
 }
 

@@ -29,8 +29,10 @@ class SignIn extends Component<{}, SignInState> {
         <form onSubmit={this.handleSubmit}>
           <SimpleInput name={'username'} value={username} type={'email'} label={'Email'} onChange={this.handleOnChange} required />
           <SimpleInput name={'password'} value={password} type={'password'} label={'Password'} onChange={this.handleOnChange} required />
-          <Button type={'submit'} label={'Submit'} />
-          <Button type={'button'} label={'Sign in with Google'} callback={signInWithGoogle}/>
+          <div className='buttons'>
+            <Button type={'submit'} label={'Submit'} />
+            <Button type={'button'} label={'Sign in with Google'} callback={signInWithGoogle} extraClass={'google-sign-in'} />
+          </div>
         </form>
       </div>
     )
