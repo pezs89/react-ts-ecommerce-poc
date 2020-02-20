@@ -5,15 +5,16 @@ import HomePage from './pages/HomePage';
 import ShopPage from './pages/ShopPage';
 import Header from './components/Header';
 import SignInUp from './pages/SignInUpPage';
-import { auth } from './firebase/firebase.utils';
+import { auth, createUserProfileDoc } from './firebase/firebase.utils';
 import { Unsubscribe } from 'firebase';
+import { IUser } from './models/IUser';
 
 interface MainProps {
   history: History;
 }
 
 interface AppState {
-  currentUser: firebase.User | null;
+  currentUser: IUser | null;
 }
 
 class App extends Component<MainProps, AppState> {
@@ -21,9 +22,18 @@ class App extends Component<MainProps, AppState> {
   unsubscribeFromAuth: Unsubscribe | null = null;
 
   componentDidMount() {
-    this.unsubscribeFromAuth = auth.onAuthStateChanged(user => {
-      console.log(user);
-      this.setState({ currentUser: user });
+    this.unsubscribeFromAuth = auth.onAuthStateChanged(async user => {
+      if (user) {
+        const userRef = await createUserProfileDoc(user);
+        if (userRef) {
+          userRef.onSnapshot((snapShot) => {
+            const userSnapshot = { id: snapShot.id, ...snapShot.data() } as IUser;
+            this.setState({
+              currentUser: { ...userSnapshot }
+            })
+          });
+        }
+      }
     });
   }
 
