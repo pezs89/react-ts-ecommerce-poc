@@ -8,10 +8,12 @@ import { FormStateMap } from 'redux-form'
 import { NotificationState } from './features/notification/types'
 import { createRootReducer } from './root-reducer'
 import { UserState } from './features/user/types'
+import { CartState } from './features/cart/types'
 
 export interface ApplicationState {
   user: UserState
   notifications: NotificationState
+  cart: CartState
   form?: FormStateMap
   router?: RouterState
 }

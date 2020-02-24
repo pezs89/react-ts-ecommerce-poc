@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Router, Switch, Route } from 'react-router-dom';
+import { Router, Switch, Route, Redirect } from 'react-router-dom';
 import { History } from 'history';
 import { Unsubscribe } from 'firebase';
 import { connect } from 'react-redux';
@@ -11,16 +11,21 @@ import SignInUp from './pages/SignInUpPage';
 import { auth, createUserProfileDoc } from './firebase/firebase.utils';
 import { IUser } from './store/features/user/types';
 import { setCurrentUser } from './store/features/user/actions';
+import { ApplicationState } from './store';
 
 interface MainProps {
   history: History;
 }
 
+const mapStateToProps = ({ user }: ApplicationState) => ({
+  currentUser: user.currentUser
+})
+
 const mapDispatchToProps = {
   setCurrentUser
 }
 
-type AppProps = MainProps & typeof mapDispatchToProps;
+type AppProps = MainProps & typeof mapDispatchToProps & ReturnType<typeof mapStateToProps>;
 
 class App extends Component<AppProps> {
   unsubscribeFromAuth: Unsubscribe | null = null;
@@ -47,7 +52,7 @@ class App extends Component<AppProps> {
   }
 
   render() {
-    const { history } = this.props;
+    const { history, currentUser } = this.props;
     return (
       <div>
         <Router history={history}>
@@ -55,7 +60,7 @@ class App extends Component<AppProps> {
           <Switch>
             <Route exact path='/' component={HomePage} />
             <Route path='/shop' component={ShopPage} />
-            <Route path='/signin' component={SignInUp} />
+            <Route exact path='/signin' render={() => currentUser ? (<Redirect to='/' />) : (<SignInUp />)} />
           </Switch>
         </Router>
       </div>
@@ -63,4 +68,4 @@ class App extends Component<AppProps> {
   }
 };
 
-export default connect(null, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);

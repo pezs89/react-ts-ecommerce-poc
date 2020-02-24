@@ -1,17 +1,21 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+
 import { auth } from '../firebase/firebase.utils';
 import { ReactComponent as Logo } from '../assets/svg/crown.svg';
 import { ApplicationState } from '../store';
+import CartIcon from './CartIcon';
+import CartDropDown from './CartDropdown';
 
-const mapStateToProps = ({ user }: ApplicationState) => ({
-  currentUser: user.currentUser
+const mapStateToProps = ({ user: { currentUser }, cart: { hidden } }: ApplicationState) => ({
+  currentUser,
+  hidden
 });
 
 type HeaderProps = ReturnType<typeof mapStateToProps>;
 
-const Header: React.FC<HeaderProps> = ({ currentUser }) => {
+const Header: React.FC<HeaderProps> = ({ currentUser, hidden }) => {
   return (
     <header className='header'>
       <Link to='/'>
@@ -30,7 +34,13 @@ const Header: React.FC<HeaderProps> = ({ currentUser }) => {
             :
             <Link className='option' to='/signin'>SIGN IN</Link>
         }
+        <CartIcon />
       </div>
+      {hidden ?
+        null
+        :
+        <CartDropDown />
+      }
     </header>
   )
 }
