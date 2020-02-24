@@ -1,11 +1,15 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { auth } from '../firebase/firebase.utils';
 import { ReactComponent as Logo } from '../assets/svg/crown.svg';
+import { ApplicationState } from '../store';
 
-interface HeaderProps {
-  currentUser: firebase.User | null;
-}
+const mapStateToProps = ({ user }: ApplicationState) => ({
+  currentUser: user.currentUser
+});
+
+type HeaderProps = ReturnType<typeof mapStateToProps>;
 
 const Header: React.FC<HeaderProps> = ({ currentUser }) => {
   return (
@@ -31,4 +35,4 @@ const Header: React.FC<HeaderProps> = ({ currentUser }) => {
   )
 }
 
-export default Header;
+export default connect(mapStateToProps)(Header);
