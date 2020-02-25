@@ -1,12 +1,26 @@
 import React from 'react';
-import { IShopItem } from '../store/features/directory/types';
+import { connect } from 'react-redux';
 
-const CollectionItem: React.FC<IShopItem> = ({
-  id,
-  name,
-  price,
-  imageUrl
+import Button from './Button';
+import { IShopItem } from '../store/features/cart/types';
+import { addToCart } from '../store/features/cart/actions';
+
+const mapDispatchToProps = {
+  addToCart
+}
+
+interface CollectionItem {
+  item: IShopItem
+}
+
+type CollectionItemProps = CollectionItem & typeof mapDispatchToProps;
+
+const CollectionItem: React.FC<CollectionItemProps> = ({
+  item,
+  addToCart
 }) => {
+  console.log(addToCart)
+  const { name, price, imageUrl } = item;
   return (
     <div className='collection-item'>
       <div
@@ -18,8 +32,9 @@ const CollectionItem: React.FC<IShopItem> = ({
         <span className='name'>{name}</span>
         <span className='price'>{price}</span>
       </div>
+      <Button label='Add to cart' extraClass='inverted' callback={() => addToCart(item)} />
     </div>
   )
 }
 
-export default CollectionItem;
+export default connect(null, mapDispatchToProps)(CollectionItem);
