@@ -10,3 +10,8 @@ export const addToCart = createAction(
   CartActionTypes.ADD_TO_CART,
   (payload: IShopItem) => ({ ...payload })
 )<IShopItem>()
+
+export const clearItemFromCart = createAction(
+  CartActionTypes.CLEAR_ITEM_FROM_CART,
+  (payload: number) => payload
+)<number>()
