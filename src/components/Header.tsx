@@ -1,16 +1,25 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { createStructuredSelector } from 'reselect';
 
+import CartIcon from './CartIcon';
+import CartDropDown from './CartDropdown';
 import { auth } from '../firebase/firebase.utils';
 import { ReactComponent as Logo } from '../assets/svg/crown.svg';
 import { ApplicationState } from '../store';
-import CartIcon from './CartIcon';
-import CartDropDown from './CartDropdown';
+import { selectCartHidden } from '../store/features/cart/selectors';
+import { selectCurrentUser } from '../store/features/user/selectors';
+import { IUser } from '../store/features/user/types';
 
-const mapStateToProps = ({ user: { currentUser }, cart: { hidden } }: ApplicationState) => ({
-  currentUser,
-  hidden
+interface HeaderSelection {
+  currentUser: IUser | null
+  hidden: boolean
+};
+
+const mapStateToProps = createStructuredSelector<ApplicationState, HeaderSelection>({
+  currentUser: selectCurrentUser,
+  hidden: selectCartHidden
 });
 
 type HeaderProps = ReturnType<typeof mapStateToProps>;

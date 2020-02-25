@@ -5,13 +5,18 @@ import { ReactComponent as ShoppingIcon } from '../assets/svg/shopping-bag.svg';
 import { toggleCartHidden } from '../store/features/cart/actions';
 import { ApplicationState } from '../store';
 import { selectCartItemsCount } from '../store/features/cart/selectors';
+import { createStructuredSelector } from 'reselect';
+
+interface CartIconSelection {
+  itemCount: number;
+}
 
 const mapDispatchToProps = {
   toggleCartHidden
 }
 
-const mapStateToProps = (state: ApplicationState) => ({
-  itemCount: selectCartItemsCount(state)
+const mapStateToProps = createStructuredSelector<ApplicationState, CartIconSelection>({
+  itemCount: selectCartItemsCount
 })
 
 type CartIconProps = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
