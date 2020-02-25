@@ -2,11 +2,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import Button from './Button';
-import { ApplicationState } from '../store';
 import CartItem from './CartItem';
+import { ApplicationState } from '../store';
+import { selectCartItems } from '../store/features/cart/selectors';
 
-const mapStateToProps = ({ cart: { items } }: ApplicationState) => ({
-  items
+const mapStateToProps = (state: ApplicationState) => ({
+  items: selectCartItems(state)
 })
 
 type CartDropDownProps = ReturnType<typeof mapStateToProps>;

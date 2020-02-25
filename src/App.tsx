@@ -41,6 +41,8 @@ class App extends Component<AppProps> {
             setCurrentUser(userSnapshot);
           });
         }
+      } else {
+        setCurrentUser(null)
       }
     });
   }

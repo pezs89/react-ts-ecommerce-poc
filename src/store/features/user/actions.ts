@@ -3,5 +3,7 @@ import { UserActionTypes, IUser } from './types'
 
 export const setCurrentUser = createAction(
   UserActionTypes.SET_CURRENT_USER,
-  (payload: IUser) => ({ ...payload })
+  (payload: IUser | null) => {
+    return payload ? { ...payload } : null
+  }
 )<IUser>()

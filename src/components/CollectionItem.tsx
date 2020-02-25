@@ -19,7 +19,6 @@ const CollectionItem: React.FC<CollectionItemProps> = ({
   item,
   addToCart
 }) => {
-  console.log(addToCart)
   const { name, price, imageUrl } = item;
   return (
     <div className='collection-item'>
