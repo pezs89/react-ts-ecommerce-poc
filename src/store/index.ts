@@ -13,11 +13,15 @@ import { NotificationState } from './features/notification/types'
 import { createRootReducer } from './root-reducer'
 import { UserState } from './features/user/types'
 import { CartState } from './features/cart/types'
+import { DirectoryState } from './features/directory/types'
+import { ShopState } from './features/shop/types'
 
 export interface ApplicationState {
   user: UserState
   notifications: NotificationState
   cart: CartState
+  directory: DirectoryState
+  shop: ShopState
   form?: FormStateMap
   router?: RouterState
 }
@@ -47,4 +51,3 @@ const configureStore = (history: History, initialState: ApplicationState) => {
 export const store = configureStore(history, initialState)
 
 export const persistor = persistStore(store)
-

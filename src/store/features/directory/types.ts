@@ -1,3 +1,7 @@
+export interface DirectoryState {
+  sections: IMenuItem[]
+}
+
 export interface IMenuItem {
   id: number
   title: string
@@ -5,4 +9,3 @@ export interface IMenuItem {
   linkUrl: string
   size?: string
 }
-
