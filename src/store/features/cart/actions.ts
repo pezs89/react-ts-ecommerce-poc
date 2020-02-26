@@ -1,5 +1,5 @@
 import { createAction } from 'typesafe-actions'
-import { CartActionTypes, IShopItem } from './types'
+import { CartActionTypes, IShopCollectionItem } from './types'
 
 export const toggleCartHidden = createAction(
   CartActionTypes.TOGGLE_CART_HIDDEN,
@@ -8,8 +8,8 @@ export const toggleCartHidden = createAction(
 
 export const addToCart = createAction(
   CartActionTypes.ADD_TO_CART,
-  (payload: IShopItem) => ({ ...payload })
-)<IShopItem>()
+  (payload: IShopCollectionItem) => ({ ...payload })
+)<IShopCollectionItem>()
 
 export const clearItemFromCart = createAction(
   CartActionTypes.CLEAR_ITEM_FROM_CART,

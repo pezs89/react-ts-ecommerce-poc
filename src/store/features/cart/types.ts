@@ -7,17 +7,21 @@ import {
 
 export interface CartState {
   hidden: boolean
-  items: Array<IShopItem>
+  items: Array<IShopCollectionItem>
 }
 
 export interface IShopItems {
+  [key: string]: IShopCollection
+}
+
+export interface IShopCollection {
   id: number
   title: string
   routeName: string
-  items: Array<IShopItem>
+  items: Array<IShopCollectionItem>
 }
 
-export interface IShopItem {
+export interface IShopCollectionItem {
   id: number
   name: string
   price: number

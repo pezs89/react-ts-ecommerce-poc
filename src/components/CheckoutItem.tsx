@@ -2,11 +2,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { IoMdClose, IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
-import { IShopItem } from '../store/features/cart/types';
+import { IShopCollectionItem } from '../store/features/cart/types';
 import { clearItemFromCart, removeItemFromCart, addToCart } from '../store/features/cart/actions';
 
 interface ICheckoutItem {
-  cartItem: IShopItem;
+  cartItem: IShopCollectionItem;
 }
 
 const mapDispatchToProps = {

@@ -1,7 +1,7 @@
 import React from 'react';
-import { IShopItem } from '../store/features/cart/types';
+import { IShopCollectionItem } from '../store/features/cart/types';
 
-const CartItem: React.FC<IShopItem> = ({ imageUrl, price, name, quantity }) => (
+const CartItem: React.FC<IShopCollectionItem> = ({ imageUrl, price, name, quantity }) => (
   <div className='cart-item'>
     <img src={imageUrl} alt={name} />
     <div className='item-details'>

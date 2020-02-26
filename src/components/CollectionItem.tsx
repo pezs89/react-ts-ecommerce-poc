@@ -2,10 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import Button from './Button';
-import { IShopItem } from '../store/features/cart/types';
+import { IShopCollectionItem } from '../store/features/cart/types';
 import { addToCart } from '../store/features/cart/actions';
 interface CollectionItem {
-  item: IShopItem
+  item: IShopCollectionItem
 }
 
 const mapDispatchToProps = {

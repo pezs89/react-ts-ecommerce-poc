@@ -28,7 +28,7 @@ class SignUp extends Component<{}, SignUpState> {
     }
   }
 
-  handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const { value, name } = event.target;
     this.setState({ [name]: value });
   }

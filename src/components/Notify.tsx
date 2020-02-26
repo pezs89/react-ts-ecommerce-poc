@@ -17,7 +17,7 @@ const mapDispatchToProp = {
 
 type NotificationProps = typeof mapDispatchToProp & ReturnType<typeof mapStateToProps>;
 
-const Notify: React.FC<NotificationProps> = ({ hideNotification, type, message }: NotificationProps) => {
+const Notify: React.FC<NotificationProps> = ({ hideNotification, type, message }: NotificationProps): JSX.Element | null => {
   const el = document.querySelector('#notification');
   if (el && type) {
     const timeout = setTimeout(() => {

@@ -2,13 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
+import CheckoutItem from '../components/CheckoutItem';
 import { selectCartItems, selectCartTotal } from '../store/features/cart/selectors';
 import { ApplicationState } from '../store';
-import { IShopItem } from '../store/features/cart/types';
-import CheckoutItem from '../components/CheckoutItem';
+import { IShopCollectionItem } from '../store/features/cart/types';
 
 interface CheckoutPageSelection {
-  cartItems: IShopItem[]
+  cartItems: Array<IShopCollectionItem>
   totalPrice: number
 }
 

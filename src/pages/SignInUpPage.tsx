@@ -2,11 +2,11 @@ import React from 'react';
 import SignIn from '../components/SignIn';
 import SignUp from '../components/SignUp';
 
-const SignInUp = () => (
+const SignInUpPage = () => (
   <div className='sign-in-and-sign-up'>
     <SignIn />
     <SignUp />
   </div>
 )
 
-export default SignInUp;
+export default SignInUpPage;

@@ -7,11 +7,11 @@ import Button from './Button';
 import CartItem from './CartItem';
 import { ApplicationState } from '../store';
 import { selectCartItems } from '../store/features/cart/selectors';
-import { IShopItem } from '../store/features/cart/types';
+import { IShopCollectionItem } from '../store/features/cart/types';
 import { toggleCartHidden } from '../store/features/cart/actions';
 
 interface CartDropDownSelection {
-  items: Array<IShopItem>
+  items: Array<IShopCollectionItem>
 }
 
 const mapStateToProps = createStructuredSelector<ApplicationState, CartDropDownSelection>({
