@@ -13,5 +13,10 @@ export const addToCart = createAction(
 
 export const clearItemFromCart = createAction(
   CartActionTypes.CLEAR_ITEM_FROM_CART,
-  (payload: number) => payload
+  (id: number) => id
+)<number>()
+
+export const removeItemFromCart = createAction(
+  CartActionTypes.REMOVE_ITEM_FROM_CART,
+  (id: number) => id
 )<number>()

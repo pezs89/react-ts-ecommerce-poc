@@ -40,7 +40,7 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({ cartItems, totalPrice }) =>
         </div>
       </div>
       {
-        cartItems.map(cartItem => <CheckoutItem key={cartItem.id} {...cartItem} />)
+        cartItems.map(cartItem => <CheckoutItem key={cartItem.id} cartItem={cartItem} />)
       }
       <div className='total'>
         <span>TOTAL: ${totalPrice}</span>
