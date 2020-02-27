@@ -6,6 +6,7 @@ import CheckoutItem from '../components/CheckoutItem';
 import { selectCartItems, selectCartTotal } from '../store/features/cart/selectors';
 import { ApplicationState } from '../store';
 import { IShopCollectionItem } from '../store/features/cart/types';
+import StripeButton from '../components/StripeButton';
 
 interface CheckoutPageSelection {
   cartItems: Array<IShopCollectionItem>
@@ -45,6 +46,12 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({ cartItems, totalPrice }) =>
       <div className='total'>
         <span>TOTAL: ${totalPrice}</span>
       </div>
+      <div className='test-warning'>
+        *Please use the following test credit card for payments*
+        <br />
+        4242 4242 4242 4242 / Exp: Any future date / CVC: Any 3 digits  
+      </div>
+      <StripeButton price={totalPrice} />
     </div>
   )
 }
