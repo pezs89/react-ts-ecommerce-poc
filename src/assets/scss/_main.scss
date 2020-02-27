@@ -1,8 +1,13 @@
-@import './abstracts/variables';
-@import './abstracts/mixins';
+@import './utils/variables';
+@import './utils/mixins';
 
 @import './base/base';
 @import './base/typography';
+
+@import './pages/home';
+@import './pages/sign-in-up';
+@import './pages/checkout';
+@import './pages/collection';
 
 @import './components/header';
 @import './components/links';
@@ -13,20 +18,16 @@
 @import './components/backdrop';
 @import './components/modal';
 @import './components/notification';
-@import './components/homepage';
 @import './components/directory';
 @import './components/menu-item';
 @import './components/collection-preview';
 @import './components/collection-item';
-@import './components/sign-in-up';
 @import './components/sign-in';
 @import './components/sign-up';
 @import './components/cart-icon';
 @import './components/cart-dropdown';
 @import './components/cart-item';
-@import './components/checkout';
 @import './components/checkout-item';
 @import './components/collections-overview';
-@import './components/collection';
 
 @import './layout/stream-create';
