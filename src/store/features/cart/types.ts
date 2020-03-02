@@ -15,7 +15,7 @@ export interface IShopItems {
 }
 
 export interface IShopCollection {
-  id: number
+  id: string
   title: string
   routeName: string
   items: Array<IShopCollectionItem>

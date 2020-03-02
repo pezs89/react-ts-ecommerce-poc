@@ -17,7 +17,7 @@ export const selectCartItemsCount = createSelector(
   [selectCartItems],
   cartItems =>
     cartItems.reduce((acc, cartItem) => {
-      if (cartItem && cartItem.quantity) {
+      if (cartItem.imageUrl && cartItem.quantity) {
         return acc + cartItem.quantity
       }
       return acc
