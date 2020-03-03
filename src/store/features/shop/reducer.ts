@@ -1,10 +1,9 @@
-import SHOP_DATA from './shop.data'
 import { ShopState, ShopActions } from './types'
 import { createReducer } from 'typesafe-actions'
 import { loadShopData } from './actions'
 
 const initialState: ShopState = {
-  collections: SHOP_DATA
+  collections: {}
 }
 
 export const shopReducer = createReducer<ShopState, ShopActions>(

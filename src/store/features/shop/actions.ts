@@ -5,5 +5,5 @@ import { IShopItems } from '../cart/types'
 
 export const loadShopData = createAction(
   ShopActionTypes.LOAD_SHOP_DATA,
-  payload => ({ ...payload })
+  (payload: IShopItems) => ({ ...payload })
 )<IShopItems>()
