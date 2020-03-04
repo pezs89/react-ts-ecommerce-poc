@@ -2,7 +2,8 @@ import { IShopItems } from '../cart/types'
 import { loadShopData } from './actions'
 
 export interface ShopState {
-  collections: IShopItems
+  collections: IShopItems | null
+  isLoading: boolean
 }
 
 export enum ShopActionTypes {

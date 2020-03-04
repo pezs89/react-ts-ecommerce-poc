@@ -3,7 +3,8 @@ import { createReducer } from 'typesafe-actions'
 import { loadShopData } from './actions'
 
 const initialState: ShopState = {
-  collections: {}
+  collections: null,
+  isLoading: false
 }
 
 export const shopReducer = createReducer<ShopState, ShopActions>(

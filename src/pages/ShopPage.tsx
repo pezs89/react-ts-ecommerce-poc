@@ -3,9 +3,8 @@ import { Route, RouteComponentProps } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Unsubscribe } from 'firebase';
 
-import CollectionsOverview from '../components/CollectionsOverview';
-import withLoading from '../components/WithLoading';
-import CollectionPage from './CollectionPage';
+import CollectionsOverviewContainer from '../containers/CollectionsOverviewContainer';
+import CollectionContainer from '../containers/CollectionContainer';
 import { firestore, converCollectionsSnapshotToMap, ICollectionSnapshotData } from '../firebase/firebase.utils';
 import { loadShopData } from '../store/features/shop/actions';
 
@@ -15,16 +14,8 @@ const mapDispatchToProps = {
 
 type ShopPageProps = typeof mapDispatchToProps & RouteComponentProps;
 
-type ShopPageState = {
-  loading: boolean
-}
-
-const WrappedCollectionsOverview = withLoading(CollectionsOverview);
-const WrappedCollectionPage = withLoading(CollectionPage);
-
-class ShopPage extends Component<ShopPageProps, ShopPageState> {
+class ShopPage extends Component<ShopPageProps> {
   unsubscribeFromSnapshot: Unsubscribe | null = null;
-  state = { loading: true }
 
   componentDidMount() {
     const { loadShopData } = this.props;
@@ -32,7 +23,6 @@ class ShopPage extends Component<ShopPageProps, ShopPageState> {
     this.unsubscribeFromSnapshot = collectionRef.onSnapshot(snapShot => {
       const collectionsMap = converCollectionsSnapshotToMap(snapShot as firebase.firestore.QuerySnapshot<ICollectionSnapshotData>);
       loadShopData(collectionsMap)
-      this.setState({ loading: false })
     })
   }
 
@@ -44,11 +34,10 @@ class ShopPage extends Component<ShopPageProps, ShopPageState> {
 
   render() {
     const { match } = this.props;
-    const { loading } = this.state;
     return (
       <div className='shop-page'>
-        <Route exact path={`${match.path}`} render={(props) => <WrappedCollectionsOverview isLoading={loading} {...props} />} />
-        <Route path={`${match.path}/:collectionId`} render={(props) => <WrappedCollectionPage isLoading={loading} {...props} />} />
+        <Route exact path={`${match.path}`} component={CollectionsOverviewContainer} />
+        <Route path={`${match.path}/:collectionId`} component={CollectionContainer} />
       </div>
     )
   }
