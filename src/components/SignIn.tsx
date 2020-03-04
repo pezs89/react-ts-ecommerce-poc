@@ -1,13 +1,23 @@
 import React, { Component, FormEvent } from 'react';
+
 import SimpleInput from './SimpleInput';
 import Button from './Button';
-import { signInWithGoogle, auth } from '../firebase/firebase.utils';
+import { auth } from '../firebase/firebase.utils';
+import { googleSignInAsync } from '../store/features/user/actions'
+import { connect } from 'react-redux';
 
-interface SignInState {
+
+const mapDispatchToProps = {
+  googleSignInRequest: googleSignInAsync.request
+}
+
+type SignInProps = typeof mapDispatchToProps;
+
+type SignInState = {
   [key: string]: string;
 }
 
-class SignIn extends Component<{}, SignInState> {
+class SignIn extends Component<SignInProps, SignInState> {
   state = { email: '', password: '' }
 
   handleSubmit = async (event: FormEvent) => {
@@ -27,6 +37,7 @@ class SignIn extends Component<{}, SignInState> {
   }
 
   render() {
+    const { googleSignInRequest } = this.props
     const { email, password } = this.state;
     return (
       <div className='sign-in'>
@@ -37,7 +48,7 @@ class SignIn extends Component<{}, SignInState> {
           <SimpleInput name={'password'} value={password} type={'password'} label={'Password'} onChange={this.handleOnChange} required />
           <div className='buttons'>
             <Button type={'submit'} label={'Submit'} />
-            <Button type={'button'} label={'Sign in with Google'} callback={signInWithGoogle} extraClass={'google-sign-in'} />
+            <Button type={'button'} label={'Sign in with Google'} callback={googleSignInRequest} extraClass={'google-sign-in'} />
           </div>
         </form>
       </div>
@@ -45,4 +56,4 @@ class SignIn extends Component<{}, SignInState> {
   }
 }
 
-export default SignIn;
+export default connect(null, mapDispatchToProps)(SignIn);

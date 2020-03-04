@@ -11,7 +11,6 @@ import SignInUp from './pages/SignInUpPage';
 import CheckoutPage from './pages/CheckoutPage';
 
 import Header from './components/Header';
-import { auth, createUserProfileDoc } from './firebase/firebase.utils';
 import { IUser } from './store/features/user/types';
 import { setCurrentUser } from './store/features/user/actions';
 import { ApplicationState } from './store';
@@ -40,19 +39,19 @@ class App extends Component<AppProps> {
 
   componentDidMount() {
     const { setCurrentUser } = this.props;
-    this.unsubscribeFromAuth = auth.onAuthStateChanged(async user => {
-      if (user) {
-        const userRef = await createUserProfileDoc(user);
-        if (userRef) {
-          userRef.onSnapshot((snapShot) => {
-            const userSnapshot = { id: snapShot.id, ...snapShot.data() } as IUser;
-            setCurrentUser(userSnapshot);
-          });
-        }
-      } else {
-        setCurrentUser(null)
-      }
-    });
+    // this.unsubscribeFromAuth = auth.onAuthStateChanged(async user => {
+    //   if (user) {
+    //     const userRef = await createUserProfileDoc(user);
+    //     if (userRef) {
+    //       userRef.onSnapshot((snapShot) => {
+    //         const userSnapshot = { id: snapShot.id, ...snapShot.data() } as IUser;
+    //         setCurrentUser(userSnapshot);
+    //       });
+    //     }
+    //   } else {
+    //     setCurrentUser(null)
+    //   }
+    // });
   }
 
   componentWillUnmount() {

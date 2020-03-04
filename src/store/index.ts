@@ -15,6 +15,7 @@ import { UserState } from './features/user/types'
 import { CartState } from './features/cart/types'
 import { DirectoryState } from './features/directory/types'
 import { ShopState } from './features/shop/types'
+import { rootSaga } from './root-saga'
 
 export interface ApplicationState {
   user: UserState
@@ -45,6 +46,7 @@ const configureStore = (history: History, initialState: ApplicationState) => {
     initialState,
     enhancer
   )
+  sagaMiddleware.run(rootSaga)
   return store
 }
 

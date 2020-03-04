@@ -1,9 +1,10 @@
-import { createAction } from 'typesafe-actions'
+import { createAsyncAction } from 'typesafe-actions'
 
 import { ShopActionTypes } from './types'
 import { IShopItems } from '../cart/types'
 
-export const loadShopData = createAction(
-  ShopActionTypes.LOAD_SHOP_DATA,
-  (payload: IShopItems) => ({ ...payload })
-)<IShopItems>()
+export const fetchShopDataAsync = createAsyncAction(
+  ShopActionTypes.FETCH_SHOP_DATA_REQUEST,
+  ShopActionTypes.FETCH_SHOP_DATA_SUCCESS,
+  ShopActionTypes.FETCH_SHOP_DATA_FAILURE
+)<undefined, IShopItems, string>();

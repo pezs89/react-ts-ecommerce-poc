@@ -1,15 +1,27 @@
 import { ShopState, ShopActions } from './types'
 import { createReducer } from 'typesafe-actions'
-import { loadShopData } from './actions'
+import { fetchShopDataAsync } from './actions'
 
 const initialState: ShopState = {
   collections: null,
-  isLoading: false
+  isLoading: false,
+  errorMsg: null
 }
 
-export const shopReducer = createReducer<ShopState, ShopActions>(
-  initialState
-).handleAction(loadShopData, (state, action) => ({
-  ...state,
-  collections: action.payload
-}))
+export const shopReducer = createReducer<ShopState, ShopActions>(initialState)
+  .handleAction(fetchShopDataAsync.request, state => ({
+    ...state,
+    isLoading: true,
+    errorMsg: null
+  }))
+  .handleAction(fetchShopDataAsync.success, (state, action) => ({
+    ...state,
+    isLoading: false,
+    collections: action.payload
+  }))
+  .handleAction(fetchShopDataAsync.failure, (state, action) => ({
+    ...state,
+    isLoading: false,
+    collections: {},
+    errorMsg: action.payload
+  }))
