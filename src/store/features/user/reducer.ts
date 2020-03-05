@@ -1,6 +1,6 @@
 import { createReducer } from 'typesafe-actions'
 import { UserState, UserAction } from './types'
-import { signInAsync } from './actions'
+import { signInAsync, signOutAsync } from './actions'
 
 export const initialState: UserState = {
   currentUser: null,
@@ -13,7 +13,15 @@ export const userReducer = createReducer<UserState, UserAction>(initialState)
     currentUser: action.payload,
     error: null
   }))
-  .handleAction(signInAsync.failure, (state, action) => ({
+  .handleAction(signOutAsync.success, (state, action) => ({
     ...state,
-    error: action.payload
+    currentUser: null,
+    error: null
   }))
+  .handleAction(
+    [signInAsync.failure, signOutAsync.failure],
+    (state, action) => ({
+      ...state,
+      error: action.payload
+    })
+  )

@@ -1,4 +1,4 @@
-import { signInAsync, checkUserSession } from './actions'
+import { signInAsync, checkUserSession, signOutAsync } from './actions'
 
 export enum UserActionTypes {
   SET_CURRENT_USER = '@@user/SET_CURRENT_USER',
@@ -34,3 +34,6 @@ export type UserAction =
   | ReturnType<typeof signInAsync.success>
   | ReturnType<typeof signInAsync.failure>
   | ReturnType<typeof checkUserSession>
+  | ReturnType<typeof signOutAsync.request>
+  | ReturnType<typeof signOutAsync.success>
+  | ReturnType<typeof signOutAsync.failure>

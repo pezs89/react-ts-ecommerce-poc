@@ -11,3 +11,9 @@ export const signInAsync = createAsyncAction(
 export const checkUserSession = createAction(
   UserActionTypes.CHECK_USER_SESSION
 )()
+
+export const signOutAsync = createAsyncAction(
+  UserActionTypes.SIGN_OUT_REQUEST,
+  UserActionTypes.SIGN_OUT_SUCCESS,
+  UserActionTypes.SIGN_OUT_FAILURE
+)<undefined, undefined, string>()

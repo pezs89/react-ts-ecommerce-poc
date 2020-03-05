@@ -5,12 +5,12 @@ import { createStructuredSelector } from 'reselect';
 
 import CartIcon from './CartIcon';
 import CartDropDown from './CartDropdown';
-import { auth } from '../firebase/firebase.utils';
 import { ReactComponent as Logo } from '../assets/svg/crown.svg';
 import { ApplicationState } from '../store';
 import { selectCartHidden } from '../store/features/cart/selectors';
 import { selectCurrentUser } from '../store/features/user/selectors';
 import { IUser } from '../store/features/user/types';
+import { signOutAsync } from '../store/features/user/actions';
 
 interface HeaderSelection {
   currentUser: IUser | null
@@ -22,9 +22,13 @@ const mapStateToProps = createStructuredSelector<ApplicationState, HeaderSelecti
   hidden: selectCartHidden
 });
 
-type HeaderProps = ReturnType<typeof mapStateToProps>;
+const mapDispatchToProps = {
+  signOutRequest: signOutAsync.request
+}
 
-const Header: React.FC<HeaderProps> = ({ currentUser, hidden }) => {
+type HeaderProps = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
+
+const Header: React.FC<HeaderProps> = ({ currentUser, hidden, signOutRequest }) => {
   return (
     <header className='header'>
       <Link to='/'>
@@ -39,7 +43,7 @@ const Header: React.FC<HeaderProps> = ({ currentUser, hidden }) => {
         </Link>
         {
           currentUser ?
-            <div className='option' onClick={() => auth.signOut()}>SIGN OUT</div>
+            <div className='option' onClick={() => signOutRequest()}>SIGN OUT</div>
             :
             <Link className='option' to='/signin'>SIGN IN</Link>
         }
@@ -54,4 +58,4 @@ const Header: React.FC<HeaderProps> = ({ currentUser, hidden }) => {
   )
 }
 
-export default connect(mapStateToProps)(Header);
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
