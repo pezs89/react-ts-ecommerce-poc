@@ -1,8 +1,4 @@
-import {
-  googleSignInAsync,
-  emailSignInAsync,
-  checkUserSession
-} from './actions'
+import { signInAsync, checkUserSession } from './actions'
 
 export enum UserActionTypes {
   SET_CURRENT_USER = '@@user/SET_CURRENT_USER',
@@ -34,10 +30,7 @@ export interface UserState {
 }
 
 export type UserAction =
-  | ReturnType<typeof googleSignInAsync.request>
-  | ReturnType<typeof googleSignInAsync.success>
-  | ReturnType<typeof googleSignInAsync.failure>
-  | ReturnType<typeof emailSignInAsync.request>
-  | ReturnType<typeof emailSignInAsync.success>
-  | ReturnType<typeof emailSignInAsync.failure>
+  | ReturnType<typeof signInAsync.request>
+  | ReturnType<typeof signInAsync.success>
+  | ReturnType<typeof signInAsync.failure>
   | ReturnType<typeof checkUserSession>

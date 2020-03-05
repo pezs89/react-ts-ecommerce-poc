@@ -2,13 +2,12 @@ import React, { Component, FormEvent } from 'react';
 
 import SimpleInput from './SimpleInput';
 import Button from './Button';
-import { googleSignInAsync, emailSignInAsync } from '../store/features/user/actions'
+import { signInAsync } from '../store/features/user/actions'
 import { connect } from 'react-redux';
 
 
 const mapDispatchToProps = {
-  googleSignInRequest: googleSignInAsync.request,
-  emailSignInRequest: emailSignInAsync.request
+  signInRequest: signInAsync.request
 }
 
 type SignInProps = typeof mapDispatchToProps;
@@ -22,9 +21,9 @@ class SignIn extends Component<SignInProps, SignInState> {
 
   handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
-    const { emailSignInRequest } = this.props;
+    const { signInRequest } = this.props;
     const { email, password } = this.state;
-    emailSignInRequest({ email, password });
+    signInRequest({ email, password });
   }
 
   handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -33,7 +32,7 @@ class SignIn extends Component<SignInProps, SignInState> {
   }
 
   render() {
-    const { googleSignInRequest } = this.props
+    const { signInRequest } = this.props
     const { email, password } = this.state;
     return (
       <div className='sign-in'>
@@ -44,7 +43,7 @@ class SignIn extends Component<SignInProps, SignInState> {
           <SimpleInput name={'password'} value={password} type={'password'} label={'Password'} onChange={this.handleOnChange} required />
           <div className='buttons'>
             <Button type={'submit'} label={'Submit'} />
-            <Button type={'button'} label={'Sign in with Google'} callback={googleSignInRequest} extraClass={'google-sign-in'} />
+            <Button type={'button'} label={'Sign in with Google'} callback={() => signInRequest(undefined)} extraClass={'google-sign-in'} />
           </div>
         </form>
       </div>

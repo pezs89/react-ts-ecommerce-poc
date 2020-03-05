@@ -1,10 +1,6 @@
 import { takeLatest, call, all, put } from 'redux-saga/effects'
 
-import {
-  googleSignInAsync,
-  emailSignInAsync,
-  checkUserSession
-} from './actions'
+import { signInAsync, checkUserSession } from './actions'
 import { UserActionTypes, IUser } from './types'
 import {
   auth,
@@ -13,44 +9,31 @@ import {
   getCurrentUser
 } from '../../../firebase/firebase.utils'
 
-export function* getSnapshotFromUserAuth(
-  userAuth: firebase.User,
-  asyncAction: typeof googleSignInAsync | typeof emailSignInAsync
-) {
+export function* getSnapshotFromUserAuth(userAuth: firebase.User) {
   try {
     const userRef = yield call(createUserProfileDoc, userAuth)
     const userSnapshot = yield userRef.get()
     const currentUser = { id: userSnapshot.id, ...userSnapshot.data() } as IUser
-    yield put(asyncAction.success(currentUser))
+    yield put(signInAsync.success(currentUser))
   } catch (error) {
-    yield put(asyncAction.failure(error.message))
+    yield put(signInAsync.failure(error.message))
   }
 }
 
-export function* signInWithGoogle() {
+export function* signIn(action: ReturnType<typeof signInAsync.request>) {
   try {
-    const { user }: { user: firebase.User } = yield auth.signInWithPopup(
-      provider
-    )
-    yield getSnapshotFromUserAuth(user, googleSignInAsync)
+    let firebaseUserAccount: firebase.User
+    if (action.payload) {
+      const { email, password } = action.payload
+      const { user } = yield auth.signInWithEmailAndPassword(email, password)
+      firebaseUserAccount = { ...user }
+    } else {
+      const { user } = yield auth.signInWithPopup(provider)
+      firebaseUserAccount = { ...user }
+    }
+    yield getSnapshotFromUserAuth(firebaseUserAccount)
   } catch (err) {
-    yield put(googleSignInAsync.failure(err.message))
-  }
-}
-
-export function* signInWithEmail({
-  payload: { email, password }
-}: ReturnType<typeof emailSignInAsync.request>) {
-  try {
-    const {
-      user
-    }: { user: firebase.User } = yield auth.signInWithEmailAndPassword(
-      email,
-      password
-    )
-    yield getSnapshotFromUserAuth(user, emailSignInAsync)
-  } catch (error) {
-    yield put(emailSignInAsync.failure(error.message))
+    yield put(signInAsync.failure(err.message))
   }
 }
 
@@ -58,19 +41,21 @@ export function* isAuthenticated() {
   try {
     const userAuth = yield getCurrentUser()
     if (userAuth) {
-      yield getSnapshotFromUserAuth(userAuth, googleSignInAsync)
+      yield getSnapshotFromUserAuth(userAuth)
     }
   } catch (error) {
-    yield put(emailSignInAsync.failure(error.message))
+    yield put(signInAsync.failure(error.message))
   }
 }
 
 export function* onGoogleSignInStart() {
-  yield takeLatest(UserActionTypes.GOOGLE_SIGN_IN_REQUEST, signInWithGoogle)
-}
-
-export function* onEmailSignInStart() {
-  yield takeLatest(UserActionTypes.EMAIL_SIGN_IN_REQUEST, signInWithEmail)
+  yield takeLatest(
+    [
+      UserActionTypes.GOOGLE_SIGN_IN_REQUEST,
+      UserActionTypes.EMAIL_SIGN_IN_REQUEST
+    ],
+    signIn
+  )
 }
 
 export function* onCheckUserSession() {
@@ -78,9 +63,5 @@ export function* onCheckUserSession() {
 }
 
 export function* userSagas() {
-  yield all([
-    call(onGoogleSignInStart),
-    call(onEmailSignInStart),
-    call(checkUserSession)
-  ])
+  yield all([call(onGoogleSignInStart), call(checkUserSession)])
 }
