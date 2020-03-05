@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Router, Switch, Route, Redirect } from 'react-router-dom';
 import { History } from 'history';
 import { connect } from 'react-redux';
@@ -13,6 +13,7 @@ import Header from './components/Header';
 import { IUser } from './store/features/user/types';
 import { ApplicationState } from './store';
 import { selectCurrentUser } from './store/features/user/selectors';
+import { checkUserSession } from './store/features/user/actions';
 
 interface MainProps {
   history: History;
@@ -26,22 +27,34 @@ const mapStateToProps = createStructuredSelector<ApplicationState, AppSelection>
   currentUser: selectCurrentUser
 })
 
-type AppProps = MainProps & ReturnType<typeof mapStateToProps>;
-
-const App: React.FC<AppProps> = ({ history, currentUser }): JSX.Element => {
-  return (
-    <div>
-      <Router history={history}>
-        <Header />
-        <Switch>
-          <Route exact path='/' component={HomePage} />
-          <Route path='/shop' component={ShopPage} />
-          <Route exact path='/checkout' component={CheckoutPage} />
-          <Route exact path='/signin' render={() => currentUser ? (<Redirect to='/' />) : (<SignInUp />)} />
-        </Switch>
-      </Router>
-    </div>
-  );
+const mapDispatchToProps = {
+  checkUserSession
 }
 
-export default connect(mapStateToProps)(App);
+type AppProps = MainProps & ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
+
+class App extends Component<AppProps> {
+  componentDidMount() {
+    const { checkUserSession } = this.props;
+    checkUserSession();
+  }
+
+  render() {
+    const { history, currentUser } = this.props;
+    return (
+      <div>
+        <Router history={history}>
+          <Header />
+          <Switch>
+            <Route exact path='/' component={HomePage} />
+            <Route path='/shop' component={ShopPage} />
+            <Route exact path='/checkout' component={CheckoutPage} />
+            <Route exact path='/signin' render={() => currentUser ? (<Redirect to='/' />) : (<SignInUp />)} />
+          </Switch>
+        </Router>
+      </div>
+    );
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

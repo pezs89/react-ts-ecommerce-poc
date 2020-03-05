@@ -1,4 +1,4 @@
-import { createAsyncAction } from 'typesafe-actions'
+import { createAsyncAction, createAction } from 'typesafe-actions'
 import { UserActionTypes, IUser, ICredentials } from './types'
 
 export const googleSignInAsync = createAsyncAction(
@@ -12,3 +12,7 @@ export const emailSignInAsync = createAsyncAction(
   UserActionTypes.SIGN_IN_SUCCESS,
   UserActionTypes.SIGN_IN_FAILURE
 )<ICredentials, IUser, string>()
+
+export const checkUserSession = createAction(
+  UserActionTypes.CHECK_USER_SESSION
+)()
