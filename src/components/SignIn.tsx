@@ -2,13 +2,13 @@ import React, { Component, FormEvent } from 'react';
 
 import SimpleInput from './SimpleInput';
 import Button from './Button';
-import { auth } from '../firebase/firebase.utils';
-import { googleSignInAsync } from '../store/features/user/actions'
+import { googleSignInAsync, emailSignInAsync } from '../store/features/user/actions'
 import { connect } from 'react-redux';
 
 
 const mapDispatchToProps = {
-  googleSignInRequest: googleSignInAsync.request
+  googleSignInRequest: googleSignInAsync.request,
+  emailSignInRequest: emailSignInAsync.request
 }
 
 type SignInProps = typeof mapDispatchToProps;
@@ -22,13 +22,9 @@ class SignIn extends Component<SignInProps, SignInState> {
 
   handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
+    const { emailSignInRequest } = this.props;
     const { email, password } = this.state;
-    try {
-      await auth.signInWithEmailAndPassword(email, password);
-      this.setState({ password: '', username: '' });
-    } catch (error) {
-      console.log(error.message)
-    }
+    emailSignInRequest({ email, password });
   }
 
   handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {

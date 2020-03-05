@@ -1,10 +1,6 @@
 import { createReducer } from 'typesafe-actions'
 import { UserState, UserAction } from './types'
-import {
-  setCurrentUser,
-  googleSignInAsync,
-  emailSignInAsync
-} from './actions'
+import { googleSignInAsync, emailSignInAsync } from './actions'
 
 export const initialState: UserState = {
   currentUser: null,
@@ -12,10 +8,6 @@ export const initialState: UserState = {
 }
 
 export const userReducer = createReducer<UserState, UserAction>(initialState)
-  .handleAction(setCurrentUser, (state, action) => ({
-    ...state,
-    currentUser: action.payload
-  }))
   .handleAction(
     [googleSignInAsync.success, emailSignInAsync.success],
     (state, action) => ({
