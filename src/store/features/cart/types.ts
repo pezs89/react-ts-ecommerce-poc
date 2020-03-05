@@ -2,7 +2,8 @@ import {
   toggleCartHidden,
   addToCart,
   clearItemFromCart,
-  removeItemFromCart
+  removeItemFromCart,
+  clearCart
 } from './actions'
 
 export interface CartState {
@@ -33,7 +34,8 @@ export enum CartActionTypes {
   TOGGLE_CART_HIDDEN = '@@cart/TOGGLE_CART_HIDDEN',
   ADD_TO_CART = '@@cart/ADD_TO_CART',
   CLEAR_ITEM_FROM_CART = '@@cart/CLEAR_ITEM_FROM_CART',
-  REMOVE_ITEM_FROM_CART = '@@cart/REMOVE_ITEM_FROM_CART'
+  REMOVE_ITEM_FROM_CART = '@@cart/REMOVE_ITEM_FROM_CART',
+  CLEAR_CART = '@@cart/CLEAR_CART'
 }
 
 export type CartActions =
@@ -41,3 +43,4 @@ export type CartActions =
   | ReturnType<typeof addToCart>
   | ReturnType<typeof clearItemFromCart>
   | ReturnType<typeof removeItemFromCart>
+  | ReturnType<typeof clearCart>

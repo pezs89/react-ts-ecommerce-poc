@@ -20,3 +20,5 @@ export const removeItemFromCart = createAction(
   CartActionTypes.REMOVE_ITEM_FROM_CART,
   (id: number) => id
 )<number>()
+
+export const clearCart = createAction(CartActionTypes.CLEAR_CART)()

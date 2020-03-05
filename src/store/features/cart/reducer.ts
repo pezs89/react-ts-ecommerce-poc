@@ -4,7 +4,8 @@ import {
   toggleCartHidden,
   addToCart,
   clearItemFromCart,
-  removeItemFromCart
+  removeItemFromCart,
+  clearCart
 } from './actions'
 import { addItemToCart, removeItemFromCart as removeItem } from './utils'
 
@@ -29,4 +30,8 @@ export const cartReducer = createReducer<CartState, CartActions>(initialState)
   .handleAction(removeItemFromCart, (state, action) => ({
     ...state,
     items: removeItem(state.items, action.payload)
+  }))
+  .handleAction(clearCart, state => ({
+    ...state,
+    items: []
   }))
