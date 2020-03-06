@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import { Router, Switch, Route, Redirect } from 'react-router-dom';
 import { History } from 'history';
 import { connect } from 'react-redux';
@@ -33,28 +33,25 @@ const mapDispatchToProps = {
 
 type AppProps = MainProps & ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
 
-class App extends Component<AppProps> {
-  componentDidMount() {
-    const { checkUserSession } = this.props;
-    checkUserSession();
-  }
+const App: React.FC<AppProps> = ({ history, currentUser, checkUserSession }) => {
+  useEffect(() => {
+    checkUserSession()
+  }, [checkUserSession])
 
-  render() {
-    const { history, currentUser } = this.props;
-    return (
-      <div>
-        <Router history={history}>
-          <Header />
-          <Switch>
-            <Route exact path='/' component={HomePage} />
-            <Route path='/shop' component={ShopPage} />
-            <Route exact path='/checkout' component={CheckoutPage} />
-            <Route exact path='/signin' render={() => currentUser ? (<Redirect to='/' />) : (<SignInUp />)} />
-          </Switch>
-        </Router>
-      </div>
-    );
-  }
+  return (
+    <div>
+      <Router history={history}>
+        <Header />
+        <Switch>
+          <Route exact path='/' component={HomePage} />
+          <Route path='/shop' component={ShopPage} />
+          <Route exact path='/checkout' component={CheckoutPage} />
+          <Route exact path='/signin' render={() => currentUser ? (<Redirect to='/' />) : (<SignInUp />)} />
+        </Switch>
+      </Router>
+    </div>
+  );
+
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

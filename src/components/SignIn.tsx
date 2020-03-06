@@ -1,4 +1,4 @@
-import React, { Component, FormEvent } from 'react';
+import React, { FormEvent, useState } from 'react';
 
 import SimpleInput from './SimpleInput';
 import Button from './Button';
@@ -16,39 +16,36 @@ type SignInState = {
   [key: string]: string;
 }
 
-class SignIn extends Component<SignInProps, SignInState> {
-  state = { email: '', password: '' }
+const SignIn: React.FC<SignInProps> = ({ signInRequest }) => {
+  const [userCredentials, setCredentials] = useState<SignInState>({ email: '', password: '' })
 
-  handleSubmit = async (event: FormEvent) => {
+  const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
-    const { signInRequest } = this.props;
-    const { email, password } = this.state;
+    const { email, password } = userCredentials;
     signInRequest({ email, password });
   }
 
-  handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value, name } = event.target;
-    this.setState({ [name]: value });
+    setCredentials({ ...userCredentials, [name]: value });
   }
 
-  render() {
-    const { signInRequest } = this.props
-    const { email, password } = this.state;
-    return (
-      <div className='sign-in'>
-        <h2>I already have an account</h2>
-        <span>Sign in with your email and password</span>
-        <form onSubmit={this.handleSubmit}>
-          <SimpleInput name={'email'} value={email} type={'email'} label={'Email'} onChange={this.handleOnChange} required />
-          <SimpleInput name={'password'} value={password} type={'password'} label={'Password'} onChange={this.handleOnChange} required />
-          <div className='buttons'>
-            <Button type={'submit'} label={'Submit'} />
-            <Button type={'button'} label={'Sign in with Google'} callback={() => signInRequest(undefined)} extraClass={'google-sign-in'} />
-          </div>
-        </form>
-      </div>
-    )
-  }
+  const { email, password } = userCredentials;
+  return (
+    <div className='sign-in'>
+      <h2>I already have an account</h2>
+      <span>Sign in with your email and password</span>
+      <form onSubmit={handleSubmit}>
+        <SimpleInput name={'email'} value={email} type={'email'} label={'Email'} onChange={handleOnChange} required />
+        <SimpleInput name={'password'} value={password} type={'password'} label={'Password'} onChange={handleOnChange} required />
+        <div className='buttons'>
+          <Button type={'submit'} label={'Submit'} />
+          <Button type={'button'} label={'Sign in with Google'} callback={() => signInRequest(undefined)} extraClass={'google-sign-in'} />
+        </div>
+      </form>
+    </div>
+  )
+
 }
 
 export default connect(null, mapDispatchToProps)(SignIn);
