@@ -15,7 +15,7 @@ type ShopPageProps = typeof mapDispatchToProps & RouteComponentProps;
 const ShopPage: React.FC<ShopPageProps> = ({ match, fetchShopData }) => {
   useEffect(() => {
     fetchShopData()
-  })
+  }, [fetchShopData])
 
   return (
     <div className='shop-page'>
