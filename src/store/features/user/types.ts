@@ -1,4 +1,9 @@
-import { signInAsync, checkUserSession, signOutAsync } from './actions'
+import {
+  signInAsync,
+  checkUserSession,
+  signOutAsync,
+  signUpAsync
+} from './actions'
 
 export enum UserActionTypes {
   SET_CURRENT_USER = '@@user/SET_CURRENT_USER',
@@ -9,12 +14,16 @@ export enum UserActionTypes {
   CHECK_USER_SESSION = '@@user/CHECK_USER_SESSION',
   SIGN_OUT_REQUEST = '@@user/SIGN_OUT_REQUEST',
   SIGN_OUT_SUCCESS = '@@user/SIGN_OUT_SUCCESS',
-  SIGN_OUT_FAILURE = '@@user/SIGN_OUT_FAILURE'
+  SIGN_OUT_FAILURE = '@@user/SIGN_OUT_FAILURE',
+  SIGN_UP_REQUEST = '@@user/SIGN_UP_REQUEST',
+  SIGN_UP_SUCCESS = '@@user/SIGN_UP_SUCCESS',
+  SIGN_UP_FAILURE = '@@user/SIGN_UP_FAILURE'
 }
 
 export interface ICredentials {
   email: string
   password: string
+  displayName?: string
 }
 
 export interface IUser {
@@ -37,3 +46,6 @@ export type UserAction =
   | ReturnType<typeof signOutAsync.request>
   | ReturnType<typeof signOutAsync.success>
   | ReturnType<typeof signOutAsync.failure>
+  | ReturnType<typeof signUpAsync.request>
+  | ReturnType<typeof signUpAsync.success>
+  | ReturnType<typeof signUpAsync.failure>

@@ -17,3 +17,9 @@ export const signOutAsync = createAsyncAction(
   UserActionTypes.SIGN_OUT_SUCCESS,
   UserActionTypes.SIGN_OUT_FAILURE
 )<undefined, undefined, string>()
+
+export const signUpAsync = createAsyncAction(
+  UserActionTypes.SIGN_UP_REQUEST,
+  UserActionTypes.SIGN_UP_SUCCESS,
+  UserActionTypes.SIGN_UP_FAILURE
+)<ICredentials, firebase.User, string>()

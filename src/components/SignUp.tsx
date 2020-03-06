@@ -2,31 +2,31 @@ import React, { Component, FormEvent } from 'react';
 
 import SimpleInput from './SimpleInput';
 import Button from './Button';
+import { signUpAsync } from '../store/features/user/actions';
+import { connect } from 'react-redux';
 
-import { auth, createUserProfileDoc } from '../firebase/firebase.utils';
+const mapDispatchToProps = {
+  signUpAsyncRequest: signUpAsync.request
+}
 
-interface SignUpState {
+type SignUpProps = typeof mapDispatchToProps;
+
+type SignUpState = {
   [key: string]: string;
 }
 
-class SignUp extends Component<{}, SignUpState> {
+class SignUp extends Component<SignUpProps, SignUpState> {
   state = { displayName: '', email: '', password: '', confirmPassword: '' };
 
-  handleSubmit = async (event: FormEvent) => {
+  handleSubmit = (event: FormEvent) => {
     event.preventDefault();
     const { displayName, email, password, confirmPassword } = this.state;
+    const { signUpAsyncRequest } = this.props;
     if (password === confirmPassword) {
-      try {
-        const { user } = await auth.createUserWithEmailAndPassword(email, password);
-        if (user) {
-          await createUserProfileDoc(user, { displayName });
-          this.setState({ displayName: '', email: '', passxword: '', confirmPassword: '' });
-        }
-      } catch (error) {
-        console.log(error.message);
-      }
+      signUpAsyncRequest({ email, password, displayName })
     }
   }
+
 
   handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const { value, name } = event.target;
@@ -51,4 +51,4 @@ class SignUp extends Component<{}, SignUpState> {
   }
 }
 
-export default SignUp;
+export default connect(null, mapDispatchToProps)(SignUp);
