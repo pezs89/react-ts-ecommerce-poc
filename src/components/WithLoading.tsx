@@ -1,4 +1,5 @@
 import React from 'react';
+import Spinner from './Spinner';
 
 type SpinnerProps = {
   isLoading: boolean
@@ -6,9 +7,7 @@ type SpinnerProps = {
 
 const withLoading = <T extends object>(WrappedComponent: React.ComponentType<T>) => ({ isLoading, ...otherProps }: T & SpinnerProps) => {
   return isLoading ?
-    <div className='spinner-overlay'>
-      <div className='spinner-overlay__spinner'></div>
-    </div>
+    <Spinner />
     :
     <WrappedComponent {...otherProps as T} />
 }
