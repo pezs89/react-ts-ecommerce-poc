@@ -12,6 +12,10 @@
   &--large {
     height: 380px;
   }
+  
+  @include mobile {
+    height: 200px;
+  }
 
   &:first-child {
     margin-right: 7.5px;

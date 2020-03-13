@@ -3,4 +3,8 @@
   display: flex;
   justify-content: space-between;
   margin: 0 auto;
+  @include tablet {
+    width: 100%;
+    flex-direction: column;
+  }
 }

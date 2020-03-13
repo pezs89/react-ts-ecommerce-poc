@@ -8,6 +8,10 @@ body {
   font-family: $font-type;
   margin: 0;
   padding: 20px 60px;
+
+  @include mobile {
+    padding: 10px;
+  }
 }
 
 h1,

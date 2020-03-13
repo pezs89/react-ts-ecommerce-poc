@@ -2,7 +2,14 @@
   display: flex;
   flex-direction: column;
   width: 380px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  padding: 25px 20px;
 
+  @include tablet {
+    margin-top: 30px;
+    width: 100%;
+    padding: 15px 10px;
+  }
   .title {
     margin: 10px 0;
   }

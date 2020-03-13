@@ -1,5 +1,17 @@
-@mixin shrinkLabel {
+@mixin shrink-label {
   top: -14px;
   font-size: 12px;
   color: $main-color;
+}
+
+@mixin mobile {
+  @media (max-width: 767px) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (max-width: 1024px) {
+    @content;
+  }
 }

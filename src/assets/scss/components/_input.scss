@@ -20,7 +20,7 @@
     }
 
     &:focus ~ .form-input-label {
-      @include shrinkLabel();
+      @include shrink-label();
     }
   }
 
@@ -39,7 +39,7 @@
     transition: 300ms ease all;
 
     &.shrink {
-      @include shrinkLabel();
+      @include shrink-label();
     }
   }
 }
