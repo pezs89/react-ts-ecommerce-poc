@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { IShopCollectionItem } from '../store/features/cart/types';
 
 const CartItem: React.FC<IShopCollectionItem> = ({ imageUrl, price, name, quantity }) => (
@@ -11,4 +11,4 @@ const CartItem: React.FC<IShopCollectionItem> = ({ imageUrl, price, name, quanti
   </div>
 )
 
-export default CartItem;
+export default memo(CartItem);

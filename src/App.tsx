@@ -6,6 +6,7 @@ import { createStructuredSelector } from 'reselect';
 
 import Header from './components/Header';
 import Spinner from './components/Spinner';
+import ErrorBoundary from './components/ErrorBoundary';
 import { IUser } from './store/features/user/types';
 import { ApplicationState } from './store';
 import { selectCurrentUser } from './store/features/user/selectors';
@@ -44,12 +45,14 @@ const App: React.FC<AppProps> = ({ history, currentUser, checkUserSession }) => 
       <Router history={history}>
         <Header />
         <Switch>
-          <Suspense fallback={<Spinner />}>
-            <Route exact path='/' component={HomePage} />
-            <Route path='/shop' component={ShopPage} />
-            <Route exact path='/checkout' component={CheckoutPage} />
-            <Route exact path='/signin' render={() => currentUser ? (<Redirect to='/' />) : (<SignInUpPage />)} />
-          </Suspense>
+          <ErrorBoundary>
+            <Suspense fallback={<Spinner />}>
+              <Route exact path='/' component={HomePage} />
+              <Route path='/shop' component={ShopPage} />
+              <Route exact path='/checkout' component={CheckoutPage} />
+              <Route exact path='/signin' render={() => currentUser ? (<Redirect to='/' />) : (<SignInUpPage />)} />
+            </Suspense>
+          </ErrorBoundary>
         </Switch>
       </Router>
     </div>
