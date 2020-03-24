@@ -81,7 +81,21 @@ export const converCollectionsSnapshotToMap = (
   }, {} as IShopItems)
 }
 
-firebase.initializeApp(config)
+export const getUserCart = async (userId: string) => {
+  const cartRef = firestore
+    .collection(`carts`)
+    .where('userId', '==', userId)
+    .where('isDone', '==', false)
+  const snapShot = await cartRef.get()
+
+  if (snapShot.empty) {
+    const cartDocRef = firestore.collection('carts').doc()
+    await cartDocRef.set({ userId, cartItems: [], isDone: false })
+    return cartDocRef
+  } else {
+    return snapShot.docs[0].ref
+  }
+}
 
 export const getCurrentUser = () => {
   return new Promise((resolve, reject) => {
@@ -91,6 +105,8 @@ export const getCurrentUser = () => {
     }, reject)
   })
 }
+
+firebase.initializeApp(config)
 
 export const auth = firebase.auth()
 export const firestore = firebase.firestore()

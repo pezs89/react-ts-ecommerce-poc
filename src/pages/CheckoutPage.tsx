@@ -3,10 +3,11 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 import CheckoutItem from '../components/CheckoutItem';
+import StripeButton from '../components/StripeButton';
 import { selectCartItems, selectCartTotal } from '../store/features/cart/selectors';
 import { ApplicationState } from '../store';
 import { IShopCollectionItem } from '../store/features/cart/types';
-import StripeButton from '../components/StripeButton';
+import { onPaymentSuccess } from '../store/features/cart/actions';
 
 interface CheckoutPageSelection {
   cartItems: Array<IShopCollectionItem>
@@ -18,9 +19,13 @@ const mapStateToProps = createStructuredSelector<ApplicationState, CheckoutPageS
   totalPrice: selectCartTotal
 })
 
-type CheckoutPageProps = ReturnType<typeof mapStateToProps>;
+const mapDispatchToProps = {
+  onPaymentSuccess: onPaymentSuccess.request
+}
 
-const CheckoutPage: React.FC<CheckoutPageProps> = ({ cartItems, totalPrice }) => {
+type CheckoutPageProps = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
+
+const CheckoutPage: React.FC<CheckoutPageProps> = ({ cartItems, totalPrice, onPaymentSuccess }) => {
   return (
     <div className='checkout-page'>
       <div className='checkout-header'>
@@ -49,11 +54,11 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({ cartItems, totalPrice }) =>
       <div className='test-warning'>
         *Please use the following test credit card for payments*
         <br />
-        4242 4242 4242 4242 / Exp: Any future date / CVC: Any 3 digits  
+        4242 4242 4242 4242 / Exp: Any future date / CVC: Any 3 digits
       </div>
-      <StripeButton price={totalPrice} />
+      <StripeButton price={totalPrice} successCallback={onPaymentSuccess} />
     </div>
   )
 }
 
-export default connect(mapStateToProps)(CheckoutPage);
+export default connect(mapStateToProps, mapDispatchToProps)(CheckoutPage);
